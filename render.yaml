@@ -11,10 +11,10 @@ services:
 
   - type: web
     name: food-view-frontend
-    env: static
+    env: node
     plan: free
-    buildCommand: cd frontend && npm install && npm run build
-    staticPublishPath: frontend/dist
+    buildCommand: cd frontend && npm install
+    startCommand: cd frontend && npm run dev -- --host 0.0.0.0 --port 10000
     envVars:
       - key: VITE_API_URL
         value: https://food-view-backend.onrender.com
