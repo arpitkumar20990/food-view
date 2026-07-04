@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { API_BASE_URL } from '../../config'
@@ -26,35 +26,25 @@ const ReelUpload = () => {
     e.preventDefault()
 
     try {
-      const data = new FormData();
+      const data = new FormData()
 
-      data.append("name", formData.name);
-      data.append("description", formData.description);
-      data.append("video", formData.video);
+      data.append('name', formData.name)
+      data.append('description', formData.description)
+      data.append('video', formData.video)
 
-      const response = await axios.post(
-        `${API_BASE_URL}/api/food`,
-        data,
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      await axios.post(`${API_BASE_URL}/api/food`, data, {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+
+      setFormData({ name: '', video: '', description: '' })
+      if (fileInputRef.current) fileInputRef.current.value = ''
+      navigate('/food-partner/home')
     } catch (err) {
-        // Clear form fields and file input after successful upload
-        if (fileInputRef.current) fileInputRef.current.value = ''
-      console.log(err.response?.data || err.message);
+      console.log(err.response?.data || err.message)
     }
- setFormData(
-  { name: '', 
-    video: '', 
-    description: '' 
-  })
-
-  navigate('/food-partner/home')
-    
   }
 
   return (
@@ -118,32 +108,6 @@ const ReelUpload = () => {
               </button>
             </form>
           </div>
-
-          {/* <div className='rounded-3xl bg-gradient-to-br from-red-50 to-gray-100 p-5 sm:p-6'>
-            <div className='mb-4 flex items-center justify-between'>
-              <h2 className='text-lg font-semibold text-gray-900'>Preview</h2>
-              <span className='rounded-full bg-red-100 px-3 py-1 text-xs font-medium text-red-600'>Live Preview</span>
-            </div>
-
-            <div className='overflow-hidden rounded-2xl border border-gray-200 bg-white'>
-              <div className='aspect-video bg-gradient-to-br from-red-200 via-gray-200 to-gray-300' />
-              <div className='space-y-3 p-4'>
-                <div className='h-3 w-2/3 rounded-full bg-gray-300' />
-                <div className='h-3 w-1/2 rounded-full bg-gray-200' />
-                <div className='h-3 w-3/4 rounded-full bg-gray-300' />
-              </div>
-            </div>
-
-            <div className='mt-5 rounded-2xl border border-gray-200 bg-white p-4 text-sm text-gray-600'>
-              <p className='font-medium text-gray-900'>What this form collects</p>
-              <ul className='mt-2 list-disc space-y-1 pl-5'>
-                <li>Food name</li>
-                <li>Video URL</li>
-                <li>Description</li>
-                <li>Food partner reference</li>
-              </ul>
-            </div>
-          </div> */}
         </div>
       </div>
     </div>

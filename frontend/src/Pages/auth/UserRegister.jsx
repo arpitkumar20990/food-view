@@ -1,29 +1,26 @@
-import React from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
 import { API_BASE_URL } from '../../config'
 
 const UserRegister = () => {
-  const navigate = useNavigate()
-  const submitHandler = async(e)=>{
-      e.preventDefault()
+  const submitHandler = async (e) => {
+    e.preventDefault()
 
-      const name = e.target.name.value
-      const email = e.target.email.value
-      const password = e.target.password.value
+    const name = e.target.name.value
+    const email = e.target.email.value
+    const password = e.target.password.value
 
-      const response = await axios.post(`${API_BASE_URL}/api/auth/user/register`,{
-          fullName : name,
-          email,
-          password
+    await axios.post(
+      `${API_BASE_URL}/api/auth/user/register`,
+      {
+        fullName: name,
+        email,
+        password,
       },
-      {withCredentials:true}
-  )
+      { withCredentials: true }
+    )
 
-
-      
-      window.location.replace('/home')
-    }
+    window.location.replace('/home')
+  }
 
   return (
     <div className='min-h-screen flex items-center justify-center bg-gray-100'>

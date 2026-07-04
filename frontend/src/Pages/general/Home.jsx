@@ -1,11 +1,13 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from '../../config'
 
 export default function Home() {
   const [reels, setReels] = useState([]);
-  const navigate = useNavigate()
+  const [current, setCurrent] = useState(0);
+  const [playing, setPlaying] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -18,29 +20,25 @@ export default function Home() {
       .catch((err) => console.log(err));
   }, []);
 
-  const [current, setCurrent] = useState(0);
-  const [playing, setPlaying] = useState(true);
-
   const videoRef = useRef(null);
   const touchStart = useRef(0);
   const lastScroll = useRef(0);
 
   useEffect(() => {
     videoRef.current?.play().catch(() => {});
-    setPlaying(true);
   }, [current]);
 
-  const nextReel = () => {
+  const nextReel = useCallback(() => {
     if (reels.length === 0) return;
     setCurrent((prev) => (prev + 1) % reels.length);
-  };
+  }, [reels.length]);
 
-  const prevReel = () => {
+  const prevReel = useCallback(() => {
     if (reels.length === 0) return;
     setCurrent((prev) => (prev - 1 + reels.length) % reels.length);
-  };
+  }, [reels.length]);
 
-  const togglePlay = () => {
+  const togglePlay = useCallback(() => {
     if (!videoRef.current) return;
 
     if (playing) {
@@ -49,10 +47,10 @@ export default function Home() {
       videoRef.current.play();
     }
 
-    setPlaying(!playing);
-  };
+    setPlaying((prev) => !prev);
+  }, [playing]);
 
-  const handleWheel = (e) => {
+  const handleWheel = useCallback((e) => {
     const now = Date.now();
 
     if (now - lastScroll.current < 400) return;
@@ -61,13 +59,13 @@ export default function Home() {
 
     if (e.deltaY > 0) nextReel();
     else prevReel();
-  };
+  }, [nextReel, prevReel]);
 
-  const handleTouchStart = (e) => {
+  const handleTouchStart = useCallback((e) => {
     touchStart.current = e.touches[0].clientY;
-  };
+  }, []);
 
-  const handleTouchEnd = (e) => {
+  const handleTouchEnd = useCallback((e) => {
     const end = e.changedTouches[0].clientY;
 
     const diff = touchStart.current - end;
@@ -75,7 +73,7 @@ export default function Home() {
     if (Math.abs(diff) < 60) return;
 
     diff > 0 ? nextReel() : prevReel();
-  };
+  }, [nextReel, prevReel]);
 
   useEffect(() => {
     const keyHandler = (e) => {
@@ -86,7 +84,7 @@ export default function Home() {
     window.addEventListener("keydown", keyHandler);
 
     return () => window.removeEventListener("keydown", keyHandler);
-  }, []);
+  }, [nextReel, prevReel]);
 
   const reel = reels[current];
 

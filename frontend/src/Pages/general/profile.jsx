@@ -1,23 +1,23 @@
-import React, { useState, useEffect, use, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { API_BASE_URL } from '../../config'
 
 const Profile = () => {
-    const navigate = useNavigate(); 
-    const { id } = useParams()
-    const [ profile, setProfile ] = useState(null)
-    const [ videos, setVideos ] = useState([])
-    const [selectedIndex, setSelectedIndex] = useState(null);
+  const navigate = useNavigate()
+  const { id } = useParams()
+  const [profile, setProfile] = useState(null)
+  const [videos, setVideos] = useState([])
+  const [selectedIndex, setSelectedIndex] = useState(null)
 
-    const reelRefs = useRef([])
-    useEffect(() => {
-        axios.get(`${API_BASE_URL}/api/food-partner/home`, { withCredentials: true })
-            .then(response => {
-                setProfile(response.data.foodPartner)
-                setVideos(response.data.foodPartner.foodItems)
-            })
-    }, [ id ])
+  const reelRefs = useRef([])
+  useEffect(() => {
+    axios.get(`${API_BASE_URL}/api/food-partner/home`, { withCredentials: true })
+      .then((response) => {
+        setProfile(response.data.foodPartner)
+        setVideos(response.data.foodPartner.foodItems)
+      })
+  }, [id])
 
     useEffect(() => {
         if (selectedIndex !== null && reelRefs.current[selectedIndex]) {
@@ -77,8 +77,8 @@ const Profile = () => {
         </div>
 
         <button
-          onClick={(e) => {
-            navigate(`/create-food`)
+          onClick={() => {
+            navigate('/create-food')
           }}
           className="rounded-full cursor-pointer bg-amber-500 px-6 py-3 font-semibold text-black active:scale-95"
         >
@@ -100,15 +100,6 @@ const Profile = () => {
             Logout
           </button>
 
-        {/* Bio
-        <div>
-          <p className="font-semibold">
-            {profile?.name}
-          </p>
-          <p className="text-gray-700">
-            Delicious homemade food 🍛
-          </p>
-        </div> */}
       </div>
     </section>
 

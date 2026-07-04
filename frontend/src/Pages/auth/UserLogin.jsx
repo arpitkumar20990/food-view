@@ -1,29 +1,26 @@
 import axios from 'axios'
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
 import { API_BASE_URL } from '../../config'
 
 const UserLogin = () => {
-    const navigate = useNavigate();
+  const submitHandler = async (e) => {
+    e.preventDefault()
 
-    const submitHandler = async(e)=>{
-      e.preventDefault()
+    const email = e.target.email.value
+    const password = e.target.password.value
 
-      const email = e.target.email.value
-      const password = e.target.password.value
-
-      const response = await axios.post(`${API_BASE_URL}/api/auth/user/login`,{
+    await axios.post(
+      `${API_BASE_URL}/api/auth/user/login`,
+      {
         email,
-        password
-      },{
-        withCredentials : true
-      })
+        password,
+      },
+      {
+        withCredentials: true,
+      }
+    )
 
-    
-
-      window.location.replace('/home')
-
-    }
+    window.location.replace('/home')
+  }
 
   return (
      <div className='min-h-screen flex items-center justify-center bg-gray-100'>

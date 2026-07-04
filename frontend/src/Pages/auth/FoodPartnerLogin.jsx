@@ -1,27 +1,26 @@
-import React from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
 import { API_BASE_URL } from '../../config'
 
 const FoodPartnerLogin = () => {
-  const navigate = useNavigate()
-  const submitHandler = async(e)=>{
-        e.preventDefault()
+  const submitHandler = async (e) => {
+    e.preventDefault()
 
-        const email = e.target.email.value
-        const password = e.target.password.value
+    const email = e.target.email.value
+    const password = e.target.password.value
 
-        await axios.post(`${API_BASE_URL}/api/auth/food-partner/login`, {
-          email,
-          password
-        }, {
-          withCredentials: true
-        })
+    await axios.post(
+      `${API_BASE_URL}/api/auth/food-partner/login`,
+      {
+        email,
+        password,
+      },
+      {
+        withCredentials: true,
+      }
+    )
 
-      
-
-      window.location.replace('/food-partner/home')
-    }
+    window.location.replace('/food-partner/home')
+  }
 
   return (
      <div className='min-h-screen flex items-center justify-center bg-gray-100'>
