@@ -22,7 +22,7 @@ const UserRegister = () => {
 
 
       
-      window.location.replace('/')
+      window.location.replace('/home')
     }
 
   return (

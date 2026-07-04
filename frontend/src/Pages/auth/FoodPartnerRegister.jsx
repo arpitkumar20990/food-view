@@ -22,7 +22,7 @@ const FoodPartnerRegister = () => {
       { withCredentials: true }
     )
 
-    navigate(`/food-partner/home/${response.data.foodPartner._id}`)
+    navigate(`/food-partner/home/`)
 
   }
 
