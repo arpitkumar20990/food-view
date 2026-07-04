@@ -1,6 +1,7 @@
 import React, { useState, useEffect, use, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { API_BASE_URL } from '../../config'
 
 const Profile = () => {
     const navigate = useNavigate(); 
@@ -11,7 +12,7 @@ const Profile = () => {
 
     const reelRefs = useRef([])
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/food-partner/home`, { withCredentials: true })
+        axios.get(`${API_BASE_URL}/api/food-partner/home`, { withCredentials: true })
             .then(response => {
                 setProfile(response.data.foodPartner)
                 setVideos(response.data.foodPartner.foodItems)
@@ -86,7 +87,7 @@ const Profile = () => {
 
         <button
             onClick={() => 
-              axios.get('http://localhost:3000/api/auth/food-partner/logout',{
+              axios.get(`${API_BASE_URL}/api/auth/food-partner/logout`,{
                 withCredentials : true
               }).then(()=>{
                   window.location.replace('/')

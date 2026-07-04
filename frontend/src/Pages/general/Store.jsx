@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { API_BASE_URL } from '../../config'
 
 const Store = () => {
   const { id } = useParams();
@@ -13,7 +14,7 @@ const Store = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/api/food-partner/${id}`, {
+      .get(`${API_BASE_URL}/api/food-partner/${id}`, {
         withCredentials: true,
       })
       .then((response) => {

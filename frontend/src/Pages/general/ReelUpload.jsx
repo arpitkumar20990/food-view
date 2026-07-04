@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { API_BASE_URL } from '../../config'
 
 const ReelUpload = () => {
   const navigate = useNavigate()
@@ -32,7 +33,7 @@ const ReelUpload = () => {
       data.append("video", formData.video);
 
       const response = await axios.post(
-        "http://localhost:3000/api/food",
+        `${API_BASE_URL}/api/food`,
         data,
         {
           withCredentials: true,

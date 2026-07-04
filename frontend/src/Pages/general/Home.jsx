@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from '../../config'
 
 export default function Home() {
   const [reels, setReels] = useState([]);
@@ -8,7 +9,7 @@ export default function Home() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/food", {
+      .get(`${API_BASE_URL}/api/food`, {
         withCredentials: true,
       })
       .then((response) => {
@@ -107,7 +108,7 @@ export default function Home() {
     >
       <button
             onClick={() => 
-              axios.get('http://localhost:3000/api/auth/user/logout',{
+              axios.get(`${API_BASE_URL}/api/auth/user/logout`,{
                 withCredentials : true
               }).then(()=>{
                   window.location.replace('/')

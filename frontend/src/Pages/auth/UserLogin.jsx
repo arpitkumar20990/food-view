@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { API_BASE_URL } from '../../config'
 
 const UserLogin = () => {
     const navigate = useNavigate();
@@ -11,7 +12,7 @@ const UserLogin = () => {
       const email = e.target.email.value
       const password = e.target.password.value
 
-      const response = await axios.post("http://localhost:3000/api/auth/user/login",{
+      const response = await axios.post(`${API_BASE_URL}/api/auth/user/login`,{
         email,
         password
       },{
