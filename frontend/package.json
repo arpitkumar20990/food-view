@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build --outDir build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview --outDir build"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.1",
