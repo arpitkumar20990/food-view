@@ -5,9 +5,9 @@ import FoodPartnerRegister from '../Pages/auth/FoodPartnerRegister'
 import FoodPartnerLogin from '../Pages/auth/FoodPartnerLogin'
 import Home from '../Pages/general/Home'
 import ReelUpload from '../Pages/general/ReelUpload'
-import Profile from '../Pages/general/Profile'
 import ChooseRegister from '../Pages/auth/ChooseRegister'
 import Store from '../Pages/general/Store'
+import Profile from '../Pages/general/Profile'
 
 const AppRoutes = () => {
   return (
