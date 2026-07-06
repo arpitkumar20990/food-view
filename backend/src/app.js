@@ -9,7 +9,8 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser())
-const allowedOrigins = ["http://localhost:5173"];
+const allowedOrigins = ["https://food-view-pi.vercel.app",
+  "http://localhost:5173",];
 
 if (process.env.FRONTEND_URL) {
     allowedOrigins.push(process.env.FRONTEND_URL);
