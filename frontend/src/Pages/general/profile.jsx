@@ -4,7 +4,7 @@ import axios from 'axios'
 import { API_BASE_URL } from '../../config'
 
 const Profile = () => {
-  const navigate = useNavigate()
+      const navigate = useNavigate()
   const { id } = useParams()
   const [profile, setProfile] = useState(null)
   const [videos, setVideos] = useState([])
@@ -28,9 +28,9 @@ const Profile = () => {
         }
       }, [selectedIndex]);
 
-
-    return (
-  <main className="max-w-5xl mx-auto px-4 py-8">
+      
+  return (
+    <main className="max-w-5xl mx-auto px-4 py-8">
     {/* Profile Header */}
     <section className="flex flex-col md:flex-row items-center md:items-start gap-8">
       
@@ -163,6 +163,7 @@ const Profile = () => {
 
       </main>
   );
+  
 }
 
-export default Profile;
+export default Profile

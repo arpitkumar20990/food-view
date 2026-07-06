@@ -9,6 +9,7 @@ import ChooseRegister from '../Pages/auth/ChooseRegister'
 import Store from '../Pages/general/Store'
 import Profile from '../Pages/general/Profile'
 
+
 const AppRoutes = () => {
   return (
     <Routes>
