@@ -1,5 +1,6 @@
 const foodModel = require('../models/food.model')
 const storageServices = require('../services/storage.service')
+const {generatedesc} = require('../services/ai.service')
 const {v4:uuid} = require('uuid')
 
 async function createFood(req, res) {
@@ -9,10 +10,13 @@ async function createFood(req, res) {
 
     const fileName = req.file.originalname || `${uuid()}`;
     const fileUploadResult = await storageServices.uploadFile(req.file.buffer, fileName, req.file.mimetype);
+
+    const desc =await generatedesc(fileUploadResult.url)
+
     
     const foodItem = await foodModel.create({
         name : req.body.name,
-        description : req.body.description,
+        description : desc,
         video : fileUploadResult.url,
         foodPartner : req.foodPartner._id
 

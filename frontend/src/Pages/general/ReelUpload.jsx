@@ -5,10 +5,10 @@ import { API_BASE_URL } from '../../config'
 
 const ReelUpload = () => {
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     video: '',
-    description: '',
   })
   const fileInputRef = useRef(null)
 
@@ -26,10 +26,10 @@ const ReelUpload = () => {
     e.preventDefault()
 
     try {
+      setLoading(true)
       const data = new FormData()
 
       data.append('name', formData.name)
-      data.append('description', formData.description)
       data.append('video', formData.video)
 
       await axios.post(`${API_BASE_URL}/api/food`, data, {
@@ -44,6 +44,8 @@ const ReelUpload = () => {
       navigate('/food-partner/home')
     } catch (err) {
       console.log(err.response?.data || err.message)
+    }finally{
+      setLoading(false)
     }
   }
 
@@ -87,24 +89,12 @@ const ReelUpload = () => {
                 )}
               </label>
 
-              <label className='block'>
-                <span className='mb-2 block text-sm font-medium text-gray-700'>Description</span>
-                <textarea
-                  name='description'
-                  rows='4'
-                  value={formData.description}
-                  onChange={handleChange}
-                  placeholder='Write a short description for your reel...'
-                  className='w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100'
-                />
-              </label>
-
 
               <button
                 type='submit'
                 className='w-full cursor-pointer rounded-2xl bg-red-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-red-700'
               >
-                Upload Reel
+                {loading ? "Uploading..." : "Upload Reel"}
               </button>
             </form>
           </div>

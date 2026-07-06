@@ -106,7 +106,7 @@ const Store = () => {
             <div
               key={video._id}
               ref={(el) => (reelRefs.current[index] = el)}
-              className="h-screen w-full flex items-center justify-center snap-start"
+              className="relative h-screen w-full flex items-center justify-center snap-start"
             >
               <video
                 src={video.video}
@@ -116,6 +116,22 @@ const Store = () => {
                 playsInline
                 className="h-full w-full object-contain"
               />
+
+              <div className="absolute bottom-0 w-full max-w-[420px] bg-gradient-to-t from-black/75 to-transparent p-6 text-white">
+                <p className="mb-[18px] text-base leading-6">
+                  {video.description}
+                </p>
+
+
+              </div>
+
+              <div className="absolute bottom-13 w-full max-w-[420px]  p-6 text-white font-bold ">
+                <span className="text-lg leading-18 text-gray-700 bg-gradient-to-t from-white/75 to-transparent p-2 rounded-2xl">
+                  {video.name}
+                </span>
+
+
+              </div>
             </div>
           ))}
         </div>

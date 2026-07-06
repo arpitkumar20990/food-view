@@ -128,6 +128,7 @@ export default function Home() {
         playsInline
         className="h-full w-full max-w-[420px] object-cover"
       />
+      
 
       <div className="absolute bottom-0 w-full max-w-[420px] bg-gradient-to-t from-black/75 to-transparent p-6 text-white">
         <p className="mb-[18px] text-base leading-6">
