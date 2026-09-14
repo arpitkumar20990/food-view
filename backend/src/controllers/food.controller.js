@@ -10,12 +10,12 @@ async function createFood(req, res) {
     }
 
     const fileName = req.file.originalname || `${uuid()}`;
-    console.log("hello 1");
+    
     const fileUploadResult = await storageServices.uploadFile(req.file.buffer, fileName, req.file.mimetype);
-    console.log("hello 2")
-    console.log(fileUploadResult.url)
+    
+   
     // const desc =await generatedesc(fileUploadResult.url)
-    // console.log(desc)
+    
     
     const foodItem = await foodModel.create({
         name : req.body.name,
