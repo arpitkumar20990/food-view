@@ -4,19 +4,22 @@ const {generatedesc} = require('../services/ai.service')
 const {v4:uuid} = require('uuid')
 
 async function createFood(req, res) {
-    if (!req.file) {
+    try {
+        if (!req.file) {
         return res.status(400).json({ error: 'Video file is required' });
     }
 
     const fileName = req.file.originalname || `${uuid()}`;
+    console.log("hello 1");
     const fileUploadResult = await storageServices.uploadFile(req.file.buffer, fileName, req.file.mimetype);
-
-    const desc =await generatedesc(fileUploadResult.url)
-
+    console.log("hello 2")
+    console.log(fileUploadResult.url)
+    // const desc =await generatedesc(fileUploadResult.url)
+    // console.log(desc)
     
     const foodItem = await foodModel.create({
         name : req.body.name,
-        description : desc,
+        description : "description",
         video : fileUploadResult.url,
         foodPartner : req.foodPartner._id
 
@@ -26,6 +29,10 @@ async function createFood(req, res) {
          message: 'food created successfully',
         food  : foodItem
      });
+    } catch (error) {
+        console.log("error  in creation")
+    }
+    
 }
 
 async function getFoodItem(req,res){

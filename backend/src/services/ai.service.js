@@ -1,30 +1,35 @@
-const { GoogleGenAI } = require("@google/genai");
+const { OpenRouter } = require('@openrouter/agent');
 
-const ai = new GoogleGenAI({
-  apikey: process.env.GEMINI_API_KEY
+const openrouter = new OpenRouter({
+  apiKey: process.env.OPENROUTER_API_KEY,
 });
 
 async function generatedesc(url) {
+  try {
+    const interaction = await openrouter.callModel({
+      model: 'openai/gpt-5.2',
+      input: [
+        {
+          type: "input_text",
+          text: `Generate a single line caption for the video.
+          Keep it short and concise, 10 to 15 words.
+          Use a hashtag and an emoji.
+          Generate the caption like a food blog video.`
+        },
+        {
+          type: "input_file",
+          fileUrl: url
+        }
+      ]
+    });
 
-  const interaction = await ai.interactions.create({
-    model: "gemini-3.5-flash",
-    input: [
-      { 
-        type: "text", 
-        text: `you generate a single line caption for the video.
-            your caption should be short and concise of 10 to 15 words.
-            you use a hastag and a emojie in the caption.
-            generate caption as for a food blog video.` },
-      {
-        type: "video",
-        uri: url,
-      }
-    ]
+    return interaction.getText();
 
-  });
-  return interaction.output_text;
+  } catch (error) {
+    console.log("error");
+  }
 }
 
 module.exports = {
   generatedesc
-}
+};
