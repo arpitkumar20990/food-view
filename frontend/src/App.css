@@ -1,1 +1,96 @@
 @import "tailwindcss";
+
+@layer utilities {
+  /* Custom scrollbar hiding */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Keyframe Animations */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s infinite ease-in-out;
+}
+
+.dark-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.12) 50%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s infinite ease-in-out;
+}
+
+@keyframes heartPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) rotate(-15deg);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.2) rotate(0deg);
+  }
+  70% {
+    opacity: 0.9;
+    transform: scale(1) rotate(5deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.4) translateY(-20px);
+  }
+}
+
+.animate-heart-pop {
+  animation: heartPop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes iconPulse {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+.animate-icon-pulse {
+  animation: iconPulse 0.6s ease-out forwards;
+}
+
+/* Smooth Transitions & Tactile Feedback */
+button, input, select, textarea, a {
+  transition: all 180ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.active-tactile:active {
+  transform: scale(0.96);
+  opacity: 0.9;
+}
