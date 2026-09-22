@@ -10,7 +10,7 @@ Food View is a full-stack food discovery app where users can browse short food r
 - Visit a food partner store profile
 - Food partners can upload food items/reels
 - JWT-based authentication with cookies
-- MongoDB storage for users, food partners, and food items
+- MongoDB storage for users, food partners and food items
 
 ## Tech Stack
 
