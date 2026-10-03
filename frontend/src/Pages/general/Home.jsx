@@ -201,7 +201,6 @@ export default function Home() {
               isMuted={isMuted}
               onToggleMute={() => setIsMuted((prev) => !prev)}
               onVisitStore={handleVisitStore}
-              onLogout={handleLogout}
             />
           </div>
         ))}

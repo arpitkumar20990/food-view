@@ -232,7 +232,6 @@ const Store = () => {
                   isMuted={modalMuted}
                   onToggleMute={() => setModalMuted((prev) => !prev)}
                   onVisitStore={() => setSelectedIndex(null)}
-                  onLogout={() => navigate('/')}
                 />
               </div>
             ))}

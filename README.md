@@ -1,131 +1,141 @@
 # Food View
 
-Food View is a full-stack food discovery app where users can browse short food reels and food partners can register, log in, upload reels, and manage their store profile.
+Food View is a food discovery app for short food videos. Users can browse reels and food partner stores; food partners can register, manage their profile, and upload videos. Uploaded videos are stored with ImageKit, and Gemini generates their descriptions.
 
 ## Features
 
-- User registration and login
-- Food partner registration and login
-- Browse food reels on the home page
-- Visit a food partner store profile
-- Food partners can upload food items/reels
-- JWT-based authentication with cookies
-- MongoDB storage for users, food partners, and food items
+- User and food partner registration, login, and logout
+- JWT authentication stored in cookies
+- Food reel feed and food partner store pages
+- Food partner profile and video uploads
+- MongoDB persistence for users, partners, and food items
+- ImageKit video storage and Gemini-generated descriptions
 
-## Tech Stack
+## Stack
 
-### Frontend
-- React
-- Vite
-- React Router DOM
-- Tailwind CSS
-- Axios
+- Frontend: React, Vite, React Router, Tailwind CSS, Axios
+- Backend: Node.js, Express, Mongoose
+- Services: MongoDB, ImageKit, Google Gemini API
 
-### Backend
-- Node.js
-- Express.js
-- MongoDB with Mongoose
-- JWT
-- Cookie-parser
-- ImageKit for file upload/storage
-
-## Project Structure
+## Project Layout
 
 ```text
 food-view/
-├── backend/
-│   ├── src/
-│   │   ├── controllers/
-│   │   ├── db/
-│   │   ├── middlewares/
-│   │   ├── models/
-│   │   ├── routes/
-│   │   ├── services/
-│   │   └── app.js
-│   ├── server.js
-│   └── package.json
-├── frontend/
-│   ├── src/
-│   │   ├── Pages/
-│   │   ├── Routes/
-│   │   └── main.jsx
-│   ├── index.html
-│   └── package.json
-└── Readme.md
+|-- backend/
+|   |-- server.js
+|   |-- package.json
+|   `-- src/
+|       |-- app.js
+|       |-- controllers/
+|       |-- db/
+|       |-- middlewares/
+|       |-- models/
+|       |-- routes/
+|       `-- services/
+`-- frontend/
+	|-- index.html
+	|-- package.json
+	|-- vercel.json
+	`-- src/
+		|-- App.jsx
+		|-- config.js
+		|-- Pages/
+		|-- Routes/
+		|-- assets/
+		|-- components/
+		`-- hooks/
 ```
 
 ## Prerequisites
 
-Before running the project, make sure you have:
+- Node.js and npm
+- A MongoDB database
+- ImageKit credentials for video uploads
+- A Google Gemini API key for generated descriptions
 
-- Node.js installed
-- npm installed
-- MongoDB running or a MongoDB connection URL available
-- ImageKit credentials if file uploads are enabled
+## Configuration
 
-## Environment Variables
-
-Create a `.env` file inside the backend folder with values like:
+Create `backend/.env` for local development:
 
 ```env
+PORT=3000
 MONGODB_URL=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret
+JWT_SECRET=your_long_random_secret
 IMAGEKIT_PRIVATE_KEY=your_imagekit_private_key
+GEMINI_API_KEY=your_gemini_api_key
+FRONTEND_URL=http://localhost:5173
 ```
 
-## Installation
+`PORT` defaults to `3000`. `FRONTEND_URL` is optional locally; set it to the deployed frontend's origin in production so the backend accepts browser requests from that site. Do not commit `.env` or expose secret values in frontend environment variables.
 
-### 1. Install backend dependencies
+The frontend uses `http://localhost:3000` when `VITE_API_URL` is not set. For a custom backend URL, set `VITE_API_URL` to the backend origin, without an `/api` suffix. For example:
+
+```env
+VITE_API_URL=https://your-backend.example.com
+```
+
+## Local Development
+
+Install dependencies in each application directory:
 
 ```bash
 cd backend
 npm install
-```
 
-### 2. Install frontend dependencies
-
-```bash
 cd ../frontend
 npm install
 ```
 
-## Running the Project
-
-### Start the backend
+Start the backend from `backend/`:
 
 ```bash
-cd backend
-node server.js
+npm start
 ```
 
-The backend will run on:
-
-```text
-http://localhost:3000
-```
-
-### Start the frontend
+Start the frontend from `frontend/` in a second terminal:
 
 ```bash
-cd frontend
 npm run dev
 ```
 
-The frontend will run on:
+The frontend runs at `http://localhost:5173`; the backend defaults to `http://localhost:3000`.
 
-```text
-http://localhost:5173
+## API Routes
+
+All routes are prefixed by the backend origin and `/api`.
+
+| Method | Route | Purpose |
+| --- | --- | --- |
+| `POST` | `/api/auth/user/register` | Register a user |
+| `POST` | `/api/auth/user/login` | Log in a user |
+| `GET` | `/api/auth/user/logout` | Log out a user |
+| `POST` | `/api/auth/food-partner/register` | Register a food partner |
+| `POST` | `/api/auth/food-partner/login` | Log in a food partner |
+| `GET` | `/api/auth/food-partner/logout` | Log out a food partner |
+| `GET` | `/api/food` | Get food items (authenticated user) |
+| `POST` | `/api/food` | Upload a food video (authenticated partner; multipart field `video`) |
+| `GET` | `/api/food-partner/home` | Get the authenticated partner profile |
+| `GET` | `/api/food-partner/:id` | Get a partner store (authenticated user) |
+
+## Deployment
+
+Deploy the frontend and backend as separate applications.
+
+### Frontend
+
+The frontend includes a Vercel rewrite for client-side routes. Set the Vercel project root directory to `frontend`, use `npm run build` as the build command, and `dist` as the output directory. Configure `VITE_API_URL` in the frontend deployment environment with the public backend origin. This variable is embedded during the frontend build, so rebuild after changing it.
+
+### Backend
+
+Deploy `backend/` to a Node.js host. Use `npm install` to install dependencies and `npm start` to start the server. Configure `MONGODB_URL`, `JWT_SECRET`, `IMAGEKIT_PRIVATE_KEY`, and `GEMINI_API_KEY` in the host's environment. Set `FRONTEND_URL` to the deployed frontend origin and use the host-provided `PORT` when available.
+
+The backend root route (`/`) returns `hello world` and can be used as a basic availability check.
+
+## Available Frontend Checks
+
+Run from `frontend/`:
+
+```bash
+npm run build
+npm run lint
 ```
-
-## Usage
-
-- Open the frontend in your browser.
-- Register as a user or food partner.
-- Users can browse reels and visit food partner stores.
-- Food partners can upload food items and manage their profile.
-
-## Notes
-
-- The frontend is configured to communicate with the backend at `http://localhost:3000`.
-- Make sure the backend is running before using the app.
-- If uploads are not working, confirm your ImageKit environment variables are set correctly.

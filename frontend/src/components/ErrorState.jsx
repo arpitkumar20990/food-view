@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const ErrorState = ({
   title = "Something went wrong",
   message = "Failed to load content. Please check your internet connection and try again.",

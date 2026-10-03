@@ -288,7 +288,6 @@ const Profile = () => {
                   isMuted={modalMuted}
                   onToggleMute={() => setModalMuted((prev) => !prev)}
                   onVisitStore={() => setSelectedIndex(null)}
-                  onLogout={handleLogout}
                 />
               </div>
             ))}

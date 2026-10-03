@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useRef, useEffect, useCallback } from 'react';
 
 export const ReelCard = ({
   reel,
@@ -7,10 +6,8 @@ export const ReelCard = ({
   isMuted,
   onToggleMute,
   onVisitStore,
-  onLogout,
 }) => {
   const videoRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [showMuteFeedback, setShowMuteFeedback] = useState(false);
   const [hearts, setHearts] = useState([]);
@@ -23,19 +20,16 @@ export const ReelCard = ({
     if (isActive) {
       const playPromise = videoRef.current.play();
       if (playPromise !== undefined) {
-        playPromise
-          .then(() => setIsPlaying(true))
-          .catch(() => {
+        playPromise.catch(() => {
             // Autoplay might be blocked if unmuted, force muted fallback
             if (videoRef.current) {
               videoRef.current.muted = true;
-              videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+              videoRef.current.play().catch(() => {});
             }
           });
       }
     } else {
       videoRef.current.pause();
-      setIsPlaying(false);
     }
   }, [isActive]);
 

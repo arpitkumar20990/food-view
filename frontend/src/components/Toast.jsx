@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 export const Toast = ({ message, type = 'info', onClose, duration = 4000 }) => {
   useEffect(() => {

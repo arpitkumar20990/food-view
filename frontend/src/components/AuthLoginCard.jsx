@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { API_BASE_URL } from '../config';
@@ -9,7 +9,6 @@ export const AuthLoginCard = ({ defaultMode = 'user' }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const isUserMode = defaultMode === 'user';
   const [activeTab, setActiveTab] = useState(defaultMode);
 
   useEffect(() => {

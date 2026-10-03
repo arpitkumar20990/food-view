@@ -1,7 +1,7 @@
 const foodModel = require('../models/food.model')
 const storageServices = require('../services/storage.service')
-const {generatedesc} = require('../services/ai.service')
-const {v4:uuid} = require('uuid')
+const {v4:uuid} = require('uuid');
+const generateDesc = require('../services/ai.service');
 
 async function createFood(req, res) {
     try {
@@ -11,15 +11,16 @@ async function createFood(req, res) {
 
     const fileName = req.file.originalname || `${uuid()}`;
     
+    
     const fileUploadResult = await storageServices.uploadFile(req.file.buffer, fileName, req.file.mimetype);
     
    
-    // const desc =await generatedesc(fileUploadResult.url)
+    const desc = await generateDesc(fileUploadResult.url)
     
     
     const foodItem = await foodModel.create({
         name : req.body.name,
-        description : "description",
+        description: desc ,
         video : fileUploadResult.url,
         foodPartner : req.foodPartner._id
 
@@ -30,7 +31,7 @@ async function createFood(req, res) {
         food  : foodItem
      });
     } catch (error) {
-        console.log("error  in creation")
+        console.log("error  in creation food item", error)
     }
     
 }
