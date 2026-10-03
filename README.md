@@ -4,12 +4,13 @@ Food View is a food discovery app for short food videos. Users can browse reels 
 
 ## Features
 
-- User and food partner registration, login, and logout
-- JWT authentication stored in cookies
-- Food reel feed and food partner store pages
-- Food partner profile and video uploads
-- MongoDB persistence for users, partners, and food items
-- ImageKit video storage and Gemini-generated descriptions
+- User registration and login
+- Food partner registration and login
+- Browse food reels on the home page
+- Visit a food partner store profile
+- Food partners can upload food items/reels
+- JWT-based authentication with cookies
+- MongoDB storage for users, food partners, and food items
 
 ## Stack
 
