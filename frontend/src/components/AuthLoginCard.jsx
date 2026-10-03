@@ -90,7 +90,7 @@ export const AuthLoginCard = ({ defaultMode = 'user' }) => {
       );
       setToast({ message: 'Login successful! Redirecting...', type: 'success' });
       setTimeout(() => {
-        window.location.replace(redirectPath);
+        navigate(redirectPath, { replace: true });
       }, 500);
     } catch (err) {
       const errorMsg =
